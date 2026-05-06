@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nerd Assistant - Universidad Galileo</title>
+    <!-- Tailwind CSS para estilos rápidos y modernos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        galileo: {
+                            dark: '#0b1120',    // Fondo principal aún más oscuro para contraste
+                            card: '#1e293b',    // Fondo de tarjetas
+                            blue: '#003b70',    // Azul institucional Galileo
+                            accent: '#F37021',  // Naranja característico GES
+                            lightblue: '#00a4e4' // Azul claro secundario
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'gradient-text': 'gradient 3s ease infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Ocultar barra de desplazamiento para un look más "App" */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Efecto de cristal para las tarjetas secundarias */
+        .glass-effect {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-100 font-sans antialiased flex justify-center min-h-screen">
+
+    <!-- Contenedor principal de la App Móvil -->
+    <div class="w-full max-w-md min-h-screen flex flex-col relative shadow-2xl overflow-hidden sm:border-x sm:border-gray-800">
+        
+        <!-- Fondo Creativo con Fotografía -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <!-- Tu fotografía como fondo -->
+            <img src="image_a30cee.jpg" alt="Fondo Jorge" class="w-full h-full object-cover object-top opacity-60">
+            <!-- Capa 1: Gradiente oscuro interactuando con los colores de la universidad -->
+            <div class="absolute inset-0 bg-gradient-to-b from-galileo-dark/95 via-galileo-blue/30 to-galileo-dark/95"></div>
+            <!-- Capa 2: Desenfoque de cristal (Blur) para perfecta legibilidad -->
+            <div class="absolute inset-0 backdrop-blur-[5px] bg-black/20"></div>
+        </div>
+
+        <!-- Contenedor del contenido (z-10 para estar sobre el fondo) -->
+        <div class="relative z-10 flex flex-col min-h-screen w-full">
+
+            <!-- 1. Encabezado -->
+            <header class="pt-10 pb-6 px-6 flex items-center justify-between gap-2 bg-galileo-dark/50 backdrop-blur-md z-10 sticky top-0 border-b border-gray-800/50">
+                <!-- Grupo Izquierdo -->
+                <div class="flex items-center gap-3">
+            <div class="w-12 shrink-0 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity">
+                <!-- Filtro CSS 'brightness-0 invert' convierte el logo a blanco para que destaque en el modo oscuro -->
+                <img src="https://www.galileo.edu/wp-content/themes/galileo-theme/img/logo-galileo.png" 
+                     alt="Logo U Galileo" 
+                     class="w-full h-auto object-contain brightness-0 invert drop-shadow-md"
+                     onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Universidad_Galileo_logo.svg/512px-Universidad_Galileo_logo.svg.png'">
+            </div>
+        </header>
+
+        <!-- 2. Contenido principal -->
+        <main class="flex-1 px-6 pb-6 overflow-y-auto">
+            
+            <!-- Sección de Perfil Superior -->
+            <div class="mb-6 glass-effect rounded-full p-2 pl-3 pr-4 flex items-center justify-between border border-gray-700/50 animate-fade-in-up" style="animation-delay: 50ms; opacity: 0;">
+                <div class="flex items-center gap-3">
+                    <div class="relative group cursor-pointer">
+                        <img id="profile-avatar" src="https://ui-avatars.com/api/?name=Jorge+Morales&background=F37021&color=fff" alt="Foto de Perfil" class="w-12 h-12 rounded-full object-cover border-2 border-transparent group-hover:border-galileo-accent transition-colors duration-300">
+                        <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-gray-800 rounded-full"></span>
+                    </div>
+                    <div class="flex flex-col cursor-pointer group">
+                        <span id="profile-name" class="text-base font-bold text-gray-100 leading-tight group-hover:text-galileo-accent transition-colors duration-300">Jorge Morales</span>
+                        <span class="text-xs text-galileo-lightblue font-medium tracking-wide uppercase">Estudiante Activo</span>
+                    </div>
+                </div>
+                <button class="w-10 h-10 rounded-full bg-white/5 text-gray-300 hover:bg-white/20 hover:text-white transition-colors flex items-center justify-center focus:outline-none">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 auto-rows-[140px]">
+                
+                <!-- Botón principal destacado con el Naranja GES -->
+                <a href="https://www.galileo.edu/" target="_blank" onclick="animateClick(this)" class="col-span-2 row-span-1 bg-gradient-to-br from-galileo-card to-gray-800/80 rounded-3xl p-6 flex flex-col justify-between border border-gray-700/50 hover:border-galileo-accent/50 hover:shadow-[0_0_20px_rgba(243,112,33,0.15)] transition-all duration-300 group relative overflow-hidden animate-fade-in-up" style="animation-delay: 100ms; opacity: 0;">
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-galileo-accent/10 rounded-full blur-2xl group-hover:bg-galileo-accent/20 transition-all duration-500"></div>
+                    
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-galileo-accent to-orange-400 flex items-center justify-center mb-2 shadow-lg shadow-orange-500/20">
+                        <i class="fa-solid fa-globe text-2xl text-white group-hover:rotate-12 transition-transform duration-300"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-xl text-white flex items-center gap-2">Ir a UG <i class="fa-solid fa-arrow-right text-sm opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i></h2>
+                        <p class="text-sm text-gray-400 font-medium">Página principal de la universidad</p>
+                    </div>
+                </a>
+
+                <!-- Botón secundario -->
+                <a href="https://jorgemejicanos.wixsite.com/mi-sitio-personal" target="_blank" onclick="animateClick(this)" class="col-span-1 row-span-1 glass-effect rounded-3xl p-5 flex flex-col justify-between border border-gray-700/50 hover:bg-gray-800 hover:-translate-y-1 hover:border-galileo-lightblue/40 transition-all duration-300 group animate-fade-in-up" style="animation-delay: 200ms; opacity: 0;">
+                    <div class="w-10 h-10 rounded-full bg-galileo-lightblue/20 flex items-center justify-center group-hover:bg-galileo-lightblue/30 transition-colors">
+                        <i class="fa-solid fa-laptop text-xl text-galileo-lightblue group-hover:scale-110 transition-transform duration-300"></i>
+                    </div>
+                    <h2 class="font-semibold text-gray-100 text-lg leading-tight">Ir a mi sitio Web</h2>
+                </a>
+
+                <!-- Botón secundario -->
+                <a href="https://www.youtube.com/watch?v=BaaUbPSaZFo" target="_blank" onclick="animateClick(this)" class="col-span-1 row-span-1 glass-effect rounded-3xl p-5 flex flex-col justify-between border border-gray-700/50 hover:bg-gray-800 hover:-translate-y-1 hover:border-purple-500/40 transition-all duration-300 group animate-fade-in-up" style="animation-delay: 300ms; opacity: 0;">
+                    <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
+                        <i class="fa-solid fa-video text-xl text-purple-400 group-hover:scale-110 transition-transform duration-300"></i>
+                    </div>
+                    <h2 class="font-semibold text-gray-100 text-lg leading-tight">Ir a Mi Video</h2>
+                </a>
+
+                <!-- Módulo Texto a Voz (Nerd Assistant) -->
+                <div class="col-span-2 row-span-1 glass-effect rounded-3xl p-5 flex flex-col justify-between border border-gray-700/50 hover:border-green-500/40 transition-all duration-300 animate-fade-in-up" style="animation-delay: 350ms; opacity: 0;">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                            <i class="fa-solid fa-robot text-xl text-green-400"></i>
+                        </div>
+                        <h2 class="font-semibold text-gray-100 text-lg leading-tight">Nerd Assistant <span class="text-xs text-gray-400 font-normal block">Texto a Voz</span></h2>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <input type="text" id="tts-input" placeholder="Escribe algo aquí..." class="flex-1 bg-gray-900/80 border border-gray-700 rounded-2xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-galileo-accent transition-colors">
+                        <button onclick="playTTS(this)" class="w-11 h-11 rounded-2xl bg-galileo-accent hover:bg-orange-500 text-white flex items-center justify-center transition-colors shrink-0 shadow-lg shadow-orange-500/20">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Tarjeta Informativa Dinámica -->
+            <div class="mt-8 p-6 rounded-3xl bg-gradient-to-r from-galileo-blue/20 to-transparent border border-galileo-blue/30 text-left relative overflow-hidden animate-fade-in-up" style="animation-delay: 450ms; opacity: 0;">
+                <div class="absolute right-0 top-0 w-24 h-24 bg-galileo-blue/20 rounded-full blur-2xl animate-pulse-slow"></div>
+                <i class="fa-regular fa-calendar-check text-galileo-lightblue text-3xl mb-3"></i>
+                <h3 class="text-white font-medium text-lg capitalize" id="dynamic-date">Cargando fecha...</h3>
+                <p class="text-sm text-gray-400 mt-1">Revisa tus actividades pendientes de hoy.</p>
+            </div>
+        </main>
+
+        <!-- 3. Sección inferior: Firma Dinámica (Reemplaza el perfil antiguo) -->
+        <footer class="mt-auto p-6 bg-galileo-dark/40 backdrop-blur-md border-t border-gray-800/80 z-10 pb-8">
+            <div class="glass-effect rounded-3xl p-5 flex items-center justify-between border border-gray-700/50 transition-all duration-300 animate-fade-in-up" style="animation-delay: 150ms; opacity: 0;">
+                <!-- Apellido como texto dinámico -->
+                <h2 class="text-3xl font-black italic tracking-wider bg-[length:200%_auto] bg-clip-text text-transparent bg-gradient-to-r from-galileo-lightblue via-galileo-accent to-galileo-lightblue animate-gradient-text drop-shadow-[0_0_10px_rgba(243,112,33,0.3)]">
+                    Morales
+                </h2>
+                <!-- Botón de Salir -->
+                <button onclick="exitApp()" class="px-4 py-2 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-colors text-sm font-bold flex items-center gap-2 border border-red-500/30">
+                    <i class="fa-solid fa-right-from-bracket"></i> Salir
+                </button>
+            </div>
+        </footer>
+
+        </div> <!-- Fin del contenedor relativo z-10 -->
+
+    </div>
+
+    <!-- Lógica JavaScript para hacer la app dinámica -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // === CONFIGURACIÓN DE USUARIO ===
+            // Reemplaza "Juan Pérez" por tu nombre real tal cual aparece en el GES
+            const nombreEstudiante = "Jorge Morales"; 
+
+            // Actualiza el nombre en la sección de perfil
+            const profileNameEl = document.getElementById('profile-name');
+            if(profileNameEl) profileNameEl.textContent = nombreEstudiante;
+
+            // Actualiza dinámicamente la foto de perfil
+            const profileAvatarEl = document.getElementById('profile-avatar');
+            if(profileAvatarEl) {
+                profileAvatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(nombreEstudiante)}&background=F37021&color=fff`;
+            }
+
+            // Función para actualizar fecha y saludo automáticamente
+            function actualizarFechaYSaludo() {
+                // 1. Saludo dinámico basado en la hora local
+                const titleEl = document.getElementById('greeting-title');
+                const hour = new Date().getHours();
+                let greeting = 'Buenas noches';
+                
+                if (hour >= 5 && hour < 12) greeting = 'Buenos días';
+                else if (hour >= 12 && hour < 19) greeting = 'Buenas tardes';
+                
+                // Reemplaza el título estático con uno dinámico
+                if(titleEl) {
+                    titleEl.innerHTML = `<span class="opacity-80 text-sm font-normal">${greeting},</span><br><span class="text-2xl text-white">${nombreEstudiante}</span>`;
+                }
+
+                // 2. Fecha dinámica en formato amigable
+                const dateEl = document.getElementById('dynamic-date');
+                if(dateEl) {
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    dateEl.textContent = new Date().toLocaleDateString('es-ES', options);
+                }
+            }
+
+            // Ejecutar al cargar la página
+            actualizarFechaYSaludo();
+
+            // Actualizar automáticamente cada minuto (60,000 milisegundos)
+            setInterval(actualizarFechaYSaludo, 60000);
+        });
+
+        // Función para el botón Salir
+        function exitApp() {
+            // Pequeña animación de desvanecimiento
+            document.body.style.transition = "opacity 0.5s ease";
+            document.body.style.opacity = "0";
+            
+            setTimeout(() => {
+                // Reemplazamos la pantalla por un mensaje de cierre de sesión
+                document.body.innerHTML = `
+                    <div class="min-h-screen w-full flex flex-col items-center justify-center bg-black text-white p-6 text-center">
+                        <i class="fa-solid fa-circle-check text-5xl text-green-500 mb-4"></i>
+                        <h1 class="text-3xl font-bold mb-2">Sesión Cerrada</h1>
+                        <p class="text-gray-400">Has salido de tu Portal Académico (Morales).</p>
+                        <button onclick="location.reload()" class="mt-8 px-6 py-3 bg-galileo-accent rounded-full font-bold hover:bg-orange-500 transition-colors shadow-lg shadow-orange-500/20">Volver a Iniciar Sesión</button>
+                    </div>
+                `;
+                document.body.style.opacity = "1";
+            }, 500);
+        }
+
+        // 3. Efecto de feedback visual al hacer clic en las tarjetas (simulación de app nativa)
+        function animateClick(element) {
+            // Evitar doble clic
+            element.style.pointerEvents = 'none';
+            element.classList.add('scale-95', 'opacity-80');
+            
+            setTimeout(() => {
+                element.classList.remove('scale-95', 'opacity-80');
+                element.style.pointerEvents = 'auto';
+            }, 150);
+        }
+
+        // 4. Efecto de carga en el botón de cerrar sesión
+        function logoutAnimation(btn) {
+            const icon = btn.querySelector('i');
+            // Cambiar icono a un spinner
+            icon.classList.replace('fa-power-off', 'fa-spinner');
+            icon.classList.add('fa-spin');
+            
+            // Restaurar después de 1 segundo (simulación)
+            setTimeout(() => {
+                icon.classList.remove('fa-spin');
+                icon.classList.replace('fa-spinner', 'fa-power-off');
+            }, 1000);
+        }
+
+        // 5. Función de Texto a Voz (Nerd Assistant)
+        function playTTS(btn) {
+            const input = document.getElementById('tts-input');
+            // Si el input está vacío, lee un mensaje por defecto
+            const textToRead = input.value.trim() !== '' ? input.value : 'Hola, soy tu Nerd Assistant. Por favor escribe algo para que pueda leerlo.';
+            
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Cancelar lecturas previas
+                
+                const utterance = new SpeechSynthesisUtterance(textToRead);
+                utterance.lang = 'es-ES'; // Configurado para idioma español
+                
+                // Efecto visual en el botón mientras habla
+                btn.classList.add('animate-pulse', '!bg-green-500');
+                btn.classList.remove('bg-galileo-accent', 'hover:bg-orange-500');
+                
+                utterance.onend = () => {
+                    // Restaurar el color original del botón cuando termina de hablar
+                    btn.classList.remove('animate-pulse', '!bg-green-500');
+                    btn.classList.add('bg-galileo-accent', 'hover:bg-orange-500');
+                };
+                
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Lo siento, tu navegador no soporta la función de Texto a Voz.');
+            }
+        }
+    </script>
+</body>
+</html>
